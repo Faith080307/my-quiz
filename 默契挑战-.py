@@ -72,6 +72,8 @@ else:
     current_q = questions[st.session_state.level]
     st.subheader(f"第 {st.session_state.level + 1} 题")
 
+    # 使用单选按钮
+    user_choice = st.radio(current_q["q"], current_q["options"], key=f"radio_{st.session_state.level}")
 
     if st.session_state.level >= len(questions):
         st.session_state.game_over = True
