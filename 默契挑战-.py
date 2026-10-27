@@ -31,7 +31,7 @@ st.markdown("---")
 # 3. 游戏结束后的结算页面
 if st.session_state.game_over:
     score = st.session_state.count
-    score_text = f"{score * 10:.0f}%"
+    score_text = f"{score * 100:.0f}%"
 
     # 根据分数给出不同的评价
     if score == 0.0:
