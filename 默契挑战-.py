@@ -46,7 +46,7 @@ if st.session_state.game_over:
         feedback = f"你与我的契合程度为：{score_text} 剩下的20%是我们畅聊的话题~"
     elif score == 0.9:
         feedback = f"你与我的契合程度为：{score_text} 不用多说，一个眼神就懂~"
-    else score == 1.0: 
+    else :
         feedback = f"你与我的契合程度为：{score_text} 🌟 UNBELIEVABLE 🌟 世另我！"
 
     st.success(feedback)
