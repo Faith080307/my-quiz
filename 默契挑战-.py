@@ -20,6 +20,8 @@ if "level" not in st.session_state:
     st.session_state.level = 0
 if "count" not in st.session_state:
     st.session_state.count = 0.0
+if "show next_btn" not in st.session_state:
+    st.session_state.show next_btn = False
 if "game_over" not in st.session_state:
     st.session_state.game_over = False
 
@@ -30,8 +32,20 @@ st.markdown("---")
 if st.session_state.game_over:
     score = st.session_state.count
     score_text = f"{score * 10:.0f}%"
+    # 按钮逻辑：先提交，后下一题
+    col1, col2 = st.columns([1, 1])
 
-    # 根据分数给出不同的评价
+    with col1:
+        # 只有没提交过答案时，才显示“提交”按钮
+        if not st.session_state.show_next_btn:
+            submit_btn = st.button("📤 提交答案", use_container_width=True, type="primary")
+            if submit_btn:
+                if selected_option is None:
+                    st.warning("⚠️ 请先选择一个选项再提交哦！")
+                else:
+                    check_answer()
+                    st.rerun()
+# 根据分数给出不同的评价
     if score == 0.0:
         feedback = f"你与我的契合程度为：{score_text} 💢 来细数你的罪恶吧！"
     elif score < 0.6:
@@ -57,11 +71,6 @@ else:
     # 4. 正常答题逻辑
     current_q = questions[st.session_state.level]
     st.subheader(f"第 {st.session_state.level + 1} 题")
-
-    # 使用单选按钮
-    user_choice = st.radio(current_q["q"], current_q["options"], key=f"radio_{st.session_state.level}")
-
-    st.session_state.level += 1
 
 
     if st.session_state.level >= len(questions):
